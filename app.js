@@ -13,28 +13,24 @@ server.register([require('vision'), Inert],function(err){
 	}
 	server.route({
 		method:'POST',
-		path:'/getSeq',
-		handler:function(req,reply){
-			console.log(req.payload);
+		path:'/',
+		handler:function(req,reply){			
 			var value = req.payload;
 			var index = value.number;
-			console.log("value:"+ value.number);
 			var i;
 			var seq = [];
-			seq[0] = 0;
+			seq[0] = 1;
 			seq[1] = 1;
 			for(i=2;i<value.number;i++){
 				seq[i] = seq[i-1] + seq[i-2];
 			}
-			console.log(seq);
 			var doc ={value:value.number,sequence:seq};
-			console.log(doc); 
-			reply.view(doc);
+			reply(doc);
 		 },
 		config: {
         	validate: {
             	payload: {
-                	number: Joi.number().integer().min(2).max(10).default(2)
+                	number: Joi.number().integer().min(1).max(1000).default(1)
             	}
         	}
     	}
